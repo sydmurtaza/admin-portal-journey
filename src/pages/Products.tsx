@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Edit2, Trash2 } from "lucide-react";
+import { Edit2, Trash2, Truck } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
 interface Product {
@@ -29,6 +29,19 @@ const Products = () => {
 
   return (
     <div className="space-y-6">
+      {/* Promotional Banner */}
+      <div className="bg-gradient-to-r from-dashboard-primary/90 to-dashboard-primary p-4 rounded-lg shadow-md">
+        <div className="flex items-center gap-3 text-white">
+          <Truck className="h-6 w-6" />
+          <div className="space-y-1">
+            <h2 className="font-semibold text-lg">Summer Special Offers! 🌞</h2>
+            <p className="text-sm opacity-90">
+              Enjoy FREE Home Delivery on all orders above $50 | Use code SUMMER23 for 10% off
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Products</h1>
         <Button>Add New Product</Button>
