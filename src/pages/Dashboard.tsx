@@ -135,75 +135,71 @@ const Dashboard = () => {
         })}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2 p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold">Sales Overview</h2>
-            <select className="bg-dashboard-light px-4 py-2 rounded-md text-sm">
-              <option>Last 6 months</option>
-              <option>Last year</option>
-              <option>All time</option>
-            </select>
-          </div>
-          <div className="h-[400px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="sales"
-                  stroke="#4318FF"
-                  strokeWidth={2}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </Card>
+      <Card className="p-6 w-full">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold">Sales Overview</h2>
+          <select className="bg-dashboard-light px-4 py-2 rounded-md text-sm">
+            <option>Last 6 months</option>
+            <option>Last year</option>
+            <option>All time</option>
+          </select>
+        </div>
+        <div className="h-[400px] w-full">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="sales"
+                stroke="#4318FF"
+                strokeWidth={2}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </Card>
 
-        <Card className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold">Deals Details</h2>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-dashboard-primary"
-              onClick={() => navigate("/products")}
+      <Card className="p-6">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold">Deals Details</h2>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-dashboard-primary"
+            onClick={() => navigate("/products")}
+          >
+            View All
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+        <div className="grid gap-4">
+          {deals.map((deal) => (
+            <div
+              key={deal.id}
+              className="p-4 rounded-lg bg-dashboard-light hover:bg-gray-100 cursor-pointer transition-colors"
+              onClick={() => navigate(`/products/${deal.id}`)}
             >
-              View All
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-          <div className="space-y-4">
-            {deals.map((deal) => (
-              <div
-                key={deal.id}
-                className="p-4 rounded-lg bg-dashboard-light hover:bg-gray-100 cursor-pointer transition-colors"
-                onClick={() => navigate(`/products/${deal.id}`)}
-              >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-medium text-sm">{deal.name}</h3>
-                    <p className="text-dashboard-primary font-bold mt-1">
-                      {deal.price}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm text-gray-500">
-                      {deal.sales} sales
-                    </p>
-                    <p className="text-sm text-gray-500 mt-1">
-                      {deal.stock} in stock
-                    </p>
-                  </div>
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="font-medium text-sm">{deal.name}</h3>
+                  <p className="text-dashboard-primary font-bold mt-1">
+                    {deal.price}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm text-gray-500">{deal.sales} sales</p>
+                  <p className="text-sm text-gray-500 mt-1">
+                    {deal.stock} in stock
+                  </p>
                 </div>
               </div>
-            ))}
-          </div>
-        </Card>
-      </div>
+            </div>
+          ))}
+        </div>
+      </Card>
     </div>
   );
 };
