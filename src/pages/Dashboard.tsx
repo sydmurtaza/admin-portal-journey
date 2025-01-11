@@ -7,6 +7,7 @@ import {
   DollarSign,
   TrendingUp,
   Package,
+  ArrowRight,
 } from "lucide-react";
 import {
   LineChart,
@@ -17,6 +18,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { Button } from "@/components/ui/button";
 
 const data = [
   { name: "Jan", sales: 4000 },
@@ -56,6 +58,30 @@ const stats = [
     trend: "-2.1%",
     color: "text-dashboard-warning",
     link: "/orders?status=pending",
+  },
+];
+
+const deals = [
+  {
+    id: 1,
+    name: "Premium Wireless Headphones",
+    price: "$199.99",
+    sales: 156,
+    stock: 43,
+  },
+  {
+    id: 2,
+    name: "Smart Fitness Tracker",
+    price: "$89.99",
+    sales: 234,
+    stock: 67,
+  },
+  {
+    id: 3,
+    name: "4K Ultra HD TV",
+    price: "$799.99",
+    sales: 89,
+    stock: 12,
   },
 ];
 
@@ -109,32 +135,75 @@ const Dashboard = () => {
         })}
       </div>
 
-      <Card className="p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold">Sales Overview</h2>
-          <select className="bg-dashboard-light px-4 py-2 rounded-md text-sm">
-            <option>Last 6 months</option>
-            <option>Last year</option>
-            <option>All time</option>
-          </select>
-        </div>
-        <div className="h-[400px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Line
-                type="monotone"
-                dataKey="sales"
-                stroke="#4318FF"
-                strokeWidth={2}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <Card className="lg:col-span-2 p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold">Sales Overview</h2>
+            <select className="bg-dashboard-light px-4 py-2 rounded-md text-sm">
+              <option>Last 6 months</option>
+              <option>Last year</option>
+              <option>All time</option>
+            </select>
+          </div>
+          <div className="h-[400px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Line
+                  type="monotone"
+                  dataKey="sales"
+                  stroke="#4318FF"
+                  strokeWidth={2}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </Card>
+
+        <Card className="p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold">Deals Details</h2>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-dashboard-primary"
+              onClick={() => navigate("/products")}
+            >
+              View All
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+          <div className="space-y-4">
+            {deals.map((deal) => (
+              <div
+                key={deal.id}
+                className="p-4 rounded-lg bg-dashboard-light hover:bg-gray-100 cursor-pointer transition-colors"
+                onClick={() => navigate(`/products/${deal.id}`)}
+              >
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="font-medium text-sm">{deal.name}</h3>
+                    <p className="text-dashboard-primary font-bold mt-1">
+                      {deal.price}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm text-gray-500">
+                      {deal.sales} sales
+                    </p>
+                    <p className="text-sm text-gray-500 mt-1">
+                      {deal.stock} in stock
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </div>
     </div>
   );
 };
